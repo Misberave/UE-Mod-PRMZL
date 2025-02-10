@@ -14,7 +14,7 @@ This way you dont need to mess around with folder browsing, renaming and zipping
 
 ### **Features:**
 - Packing the UE project
-- Renaming the pakchunk archives .utoc .ucas .pak
+- Renaming the pakchunk archives .utoc .ucas .pak, supports multiple at once
 - Moving from Output folder to ~mods folder
 - Creating a Readme for each file or one for multiple
 - Zipping each mod into its own .zip archive
