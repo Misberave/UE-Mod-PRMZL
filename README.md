@@ -11,7 +11,7 @@
 This batch file can automate almost the whole process AFTER setting up the files in the UnrealEditor project.
 This way you dont need to mess around with folder browsing, renaming and zipping the archives by hand and it saves hundreds of mouseclicks in the testing process, which your back and wrist will thank you for.
 
-
+## Info: The scripts zip feature only works with iostore format right now, for packing without iostore you can change the Command at Step 1: and remove the "-iostore" so packing, renaming moving launch works just not the zip 
 ### **Features:**
 - Packing the UE project
 - Renaming the pakchunk archives .utoc .ucas .pak for multiple chunkIDs 
