@@ -24,13 +24,13 @@ Those are the things you need to setup:
 
 
 set ENGINE_PATH="C:\UEX.XX\Engine\Build\BatchFiles\RunUAT.bat"
---> Path to the RunUAT.bat 
+- Path to the RunUAT.bat 
 
 set PROJECT_PATH="C:\Users\User\Documents\Unreal Projects\Project\Example.uproject"
---> Path to your project file
+- Path to your project file
 
 set ARCHIVE_DIR="C:\UE_Package_Directory"
---> Where you previously packaged your project archives to
+- Package directory (same as Source Path)
 
 set GAME_PATH="C:\Path\To\Game.exe" 
 --> Path to game for automatic launch
