@@ -33,17 +33,17 @@ set ARCHIVE_DIR="C:\UE_Package_Directory"
 - Package directory (same as Source Path)
 
 set GAME_PATH="C:\Path\To\Game.exe" 
---> Path to game for automatic launch
+- Path to game for automatic launch
 
 set SOURCE_PATH="M:\UE_Package_Directory\WindowsNoEditor\...\Content\Paks"   
--->Package Directory 
+- Package Directory 
 
 set DESTINATION_PATH="Y:\SteamLibrary\steamapps\common\...\...\Content\Paks\~mods" 
---> Destination=Game ~mods or paks folder)
+- Destination=Game ~mods or paks folder)
 
 
 set MOD_FILES=555:Modname1 556:Mod2Name 557:Mod3Name 558:Mod4Name 
---> ChunkID:ModName format, can be multiple seperated with Space, defines what your packed chunks will be renamed to (_P gets added automatically)
+- ChunkID:ModName format, can be multiple seperated with Space, defines what your packed chunks will be renamed to (_P gets added automatically)
 
 (
     echo 555:Description of your mod
@@ -51,19 +51,19 @@ set MOD_FILES=555:Modname1 556:Mod2Name 557:Mod3Name 558:Mod4Name
     echo 557:Description of your mod  
     echo 558:Description of your mod
 ) > mod_descriptions.txt
---> Assign mod descriptions for the readme, one line for each mod (Optional if readme is enabled)
+- Assign mod descriptions for the readme, one line for each mod (Optional if readme is enabled)
 
 set ENABLE_ZIP=1 
---> Enables automatic zip file creation for each mod
+- Enables automatic zip file creation for each mod
 
 set ENABLE_GAME_LAUNCH=1 
---> Enables automatic launch of the game for testing of the mod
+- Enables automatic launch of the game for testing of the mod
 
 set ENABLE_README=1    
---> Enables readme creation
+- Enables readme creation
 
 Readme Configuration  
---> Header content of the Readme
+- Header content of the Readme
 
 set "MOD_AUTHOR=YourName"
 Date (Automatic)
@@ -72,7 +72,7 @@ Link (Optional)
 set LINK=www.Example.com
 
 set README_MODE=1 
---> README Mode (1 = Own README for each Mod, 2 = Summary README for multiple Mods)
+- README Mode (1 = Own README for each Mod, 2 = Summary README for multiple Mods)
 
 set ALL_MODS_README=Readme.txt 
---> Filename for summary Readme
+- Filename for summary Readme
