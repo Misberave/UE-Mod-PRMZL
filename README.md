@@ -21,13 +21,13 @@ This way you dont need to mess around with folder browsing, renaming and zipping
 - Launching the game automatically after to test the mod
 
   
-## How It Works:
+### How It Works:
 
 Simply set up the .bat file in an editor for your current project and instead of hitting "package for windows" inside the Editor, you just run the .bat.
 
 
 
-##Those are the things you need to setup:
+## Those are the things you need to setup:
 
 
 set ENGINE_PATH="C:\UEX.XX\Engine\Build\BatchFiles\RunUAT.bat"
