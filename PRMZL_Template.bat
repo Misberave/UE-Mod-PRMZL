@@ -18,7 +18,7 @@ Created and directed by Misberave, with help from AI
 :: CONFIGURATION - Set your values here, all in ""
 :: ======================================
 
-:: Unreal Engine Path
+:: Unreal Engine RunUAT.bat Path
 set ENGINE_PATH="C:\UEX.XX\Engine\Build\BatchFiles\RunUAT.bat"
 
 :: Unreal Project Path
