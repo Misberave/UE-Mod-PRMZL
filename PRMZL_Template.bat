@@ -1,7 +1,7 @@
 @echo off
 setlocal EnableDelayedExpansion
 
-Created and directed by Misberave, with help from AI
+::Created and directed by Misberave, with help from AI
 
 ::██████╗░██████╗░███╗░░░███╗███████╗██╗░░░░░
 ::██╔══██╗██╔══██╗████╗░████║╚════██║██║░░░░░
