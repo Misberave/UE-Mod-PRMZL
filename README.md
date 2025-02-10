@@ -27,7 +27,7 @@ Simply set up the .bat file in an editor for your current project and instead of
 
 
 
-## Those are the things you need to setup:
+### Those are the things you need to setup:
 
 
 set ENGINE_PATH="C:\UEX.XX\Engine\Build\BatchFiles\RunUAT.bat"
