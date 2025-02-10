@@ -3,7 +3,7 @@ Script to automate the Unreal Engine modding pipeline needed to test and share m
 
 This batch file can automate almost the whole process AFTER setting up the files in the UnrealEditor project.
 This way you dont need to mess around with folder browsing, renaming and zipping the archives by hand and it saves hundreds of mouseclicks in the testing process, which your back and wrist will thank you for.
-Simply set up the .bat file in an editor for your current project and you can run it whenever you made changes to your files you want to test.
+
 
 Features:
 - Packing the UE project
@@ -12,3 +12,7 @@ Features:
 - Creating a Readme for each file or one for multiple
 - Zipping each mod into its own .zip archive
 - Launching the game automatically after to test the mod 
+
+How It Works:
+
+Simply set up the .bat file in an editor for your current project and you can run it whenever you made changes to your files you want to test.
