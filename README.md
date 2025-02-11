@@ -25,7 +25,7 @@ all in one go
 
 Simply set up the .bat file in an editor for your current project and instead of hitting "package for windows" inside the Editor, you just run the .bat.
 
-
+https://www.youtube.com/watch?v=L9szUY_UrzY
 
 ### Those are the things you need to setup:
 
