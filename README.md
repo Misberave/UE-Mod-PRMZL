@@ -11,7 +11,7 @@
 This batch file can automate almost the whole process AFTER setting up the files in the UnrealEditor project.
 This way you dont need to mess around with folder browsing, renaming and zipping the archives by hand and it saves hundreds of mouseclicks in the testing process, which your back and wrist will thank you for.
 
-### Info: for packing without iostore you can change the Command at Step 1: and remove the "-iostore" so packing, renaming moving launch works just not the zip 
+
 ### **Features:**
 - Packing the UE project
 - Renaming the pakchunk archives .utoc .ucas .pak for multiple chunkIDs 
@@ -19,7 +19,7 @@ This way you dont need to mess around with folder browsing, renaming and zipping
 - Creating a Readme for each file or one for multiple
 - Zipping each mod into its own .zip archive
 - Launching the game automatically after to test the mod
-
+all in one go
   
 ### How It Works:
 
@@ -48,6 +48,7 @@ set SOURCE_PATH="M:\UE_Package_Directory\WindowsNoEditor\...\Content\Paks"
 set DESTINATION_PATH="Y:\SteamLibrary\steamapps\common\...\...\Content\Paks\~mods" 
 - Destination=Game ~mods or paks folder)
 
+set ENABLE_IOSTORE=
 
 set MOD_FILES=555:Modname1 556:Mod2Name 557:Mod3Name 558:Mod4Name 
 - ChunkID:ModName format, can be multiple seperated with Space, defines what your packed chunks will be renamed to (_P gets added automatically)
