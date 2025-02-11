@@ -27,7 +27,8 @@ set PROJECT_PATH="C:\Users\User\Documents\Unreal Projects\Project\Example.uproje
 :: UE Package Directory
 set ARCHIVE_DIR="C:\UE_Package_Directory"
 
-::UE Packing Method
+::IOSTORE
+set ENABLE_IOSTORE=1
 
 :: Game Destination Path (Optional for automatic game launch if enabled)
 set GAME_PATH="C:\Path\To\Game.exe"
@@ -96,13 +97,26 @@ title UE Modding PRMZL
 :: ======================================
 :: Step 1: Run the Packing Process
 :: ======================================
-echo Starting the packing process...
-call %ENGINE_PATH% BuildCookRun ^
-    -project="%PROJECT_PATH%" ^
-    -noP4 -platform=Win64 -clientconfig=Shipping -serverconfig=Shipping ^
-    -cook -build -stage -pak -iostore -compressed ^
-    -archive -archivedirectory="%ARCHIVE_DIR%" ^
-    -verbose
+
+:: Starte das UE Packaging mit optionalem IOSTORE
+echo Running UE BuildCookRun...
+
+if "%ENABLE_IOSTORE%" == "1" (
+    call %ENGINE_PATH% BuildCookRun ^
+        -project="%PROJECT_PATH%" ^
+        -noP4 -platform=Win64 -clientconfig=Shipping -serverconfig=Shipping ^
+        -cook -build -stage -pak -compressed ^
+        -archive -archivedirectory="%ARCHIVE_DIR%" ^
+        -iostore ^
+        -verbose
+) else (
+    call %ENGINE_PATH% BuildCookRun ^
+        -project="%PROJECT_PATH%" ^
+        -noP4 -platform=Win64 -clientconfig=Shipping -serverconfig=Shipping ^
+        -cook -build -stage -pak -compressed ^
+        -archive -archivedirectory="%ARCHIVE_DIR%" ^
+        -verbose
+)
 
 if %errorlevel% neq 0 (
     echo ERROR: Packing process failed. Aborting!
