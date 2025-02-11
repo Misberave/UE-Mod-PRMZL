@@ -223,7 +223,7 @@ if "%ENABLE_README%" == "1" (
 
 
 :: ======================================
-:: Step 3: Create ZIP Archive (Optional)
+:: Step 3: Create ZIP Archive (Optional, using PowerShell)
 :: ======================================
 if "%ENABLE_ZIP%" == "1" (
     for %%S in (%MOD_FILES%) do (
@@ -233,20 +233,38 @@ if "%ENABLE_ZIP%" == "1" (
 
             echo Creating ZIP archive for !MOD_NAME!... 
             pushd "%DESTINATION_PATH%"
-            if exist "!MOD_NAME!.utoc" (
-                if "%ENABLE_README%" == "1" (
-                    if "%README_MODE%" == "1" (
-                        powershell -Command "Compress-Archive -Path '!MOD_NAME!.utoc', '!MOD_NAME!.ucas', '!MOD_NAME!.pak', 'ReadMe_!MOD_README_NAME!.txt' -DestinationPath '!MOD_NAME!.zip' -Force"
-                    ) else if "%README_MODE%" == "2" (
-                        powershell -Command "Compress-Archive -Path '!MOD_NAME!.utoc', '!MOD_NAME!.ucas', '!MOD_NAME!.pak', '%ALL_MODS_README%' -DestinationPath '!MOD_NAME!.zip' -Force"
-                    )
-                ) else (
-                    powershell -Command "Compress-Archive -Path '!MOD_NAME!.utoc', '!MOD_NAME!.ucas', '!MOD_NAME!.pak' -DestinationPath '!MOD_NAME!.zip' -Force"
+
+            :: Reset ZIP Content
+            set "ZIP_FILES="
+
+            :: Add only existing files
+            if exist "!MOD_NAME!.pak" set "ZIP_FILES=!ZIP_FILES! , '!MOD_NAME!.pak'"
+            if exist "!MOD_NAME!.utoc" set "ZIP_FILES=!ZIP_FILES! , '!MOD_NAME!.utoc'"
+            if exist "!MOD_NAME!.ucas" set "ZIP_FILES=!ZIP_FILES! , '!MOD_NAME!.ucas'"
+
+            if "%ENABLE_README%" == "1" (
+                if "%README_MODE%" == "1" (
+                    if exist "ReadMe_!MOD_README_NAME!.txt" set "ZIP_FILES=!ZIP_FILES! , 'ReadMe_!MOD_README_NAME!.txt'"
+                ) else if "%README_MODE%" == "2" (
+                    if exist "%ALL_MODS_README%" set "ZIP_FILES=!ZIP_FILES! , '%ALL_MODS_README%'"
                 )
-                echo SUCCESS: ZIP archive created: !MOD_NAME!.zip
-            ) else (
-                echo ERROR: One or more files missing for ZIP creation.
             )
+
+            :: Remove leading comma (only for correct syntax)
+            set "ZIP_FILES=!ZIP_FILES:~2!"
+
+            :: Check if we have files to zip
+            if not "!ZIP_FILES!" == "" (
+                powershell -Command "& { Compress-Archive -Path @(!ZIP_FILES!) -DestinationPath '!MOD_NAME!.zip' -Force }"
+                if exist "!MOD_NAME!.zip" (
+                    echo SUCCESS: ZIP archive created for !MOD_NAME!.
+                ) else (
+                    echo ERROR: ZIP archive was not created for !MOD_NAME!.
+                )
+            ) else (
+                echo WARNING: No valid files found for !MOD_NAME!, skipping ZIP creation.
+            )
+
             popd
         )
     )
