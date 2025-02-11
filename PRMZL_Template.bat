@@ -236,12 +236,12 @@ if "%ENABLE_ZIP%" == "1" (
             if exist "!MOD_NAME!.utoc" (
                 if "%ENABLE_README%" == "1" (
                     if "%README_MODE%" == "1" (
-                        tar -cf "!MOD_NAME!.zip" "!MOD_NAME!.utoc" "!MOD_NAME!.ucas" "!MOD_NAME!.pak" "ReadMe_!MOD_README_NAME!.txt"
+                        powershell -Command "Compress-Archive -Path '!MOD_NAME!.utoc', '!MOD_NAME!.ucas', '!MOD_NAME!.pak', 'ReadMe_!MOD_README_NAME!.txt' -DestinationPath '!MOD_NAME!.zip' -Force"
                     ) else if "%README_MODE%" == "2" (
-                        tar -cf "!MOD_NAME!.zip" "!MOD_NAME!.utoc" "!MOD_NAME!.ucas" "!MOD_NAME!.pak" "%ALL_MODS_README%"
+                        powershell -Command "Compress-Archive -Path '!MOD_NAME!.utoc', '!MOD_NAME!.ucas', '!MOD_NAME!.pak', '%ALL_MODS_README%' -DestinationPath '!MOD_NAME!.zip' -Force"
                     )
                 ) else (
-                    tar -cf "!MOD_NAME!.zip" "!MOD_NAME!.utoc" "!MOD_NAME!.ucas" "!MOD_NAME!.pak"
+                    powershell -Command "Compress-Archive -Path '!MOD_NAME!.utoc', '!MOD_NAME!.ucas', '!MOD_NAME!.pak' -DestinationPath '!MOD_NAME!.zip' -Force"
                 )
                 echo SUCCESS: ZIP archive created: !MOD_NAME!.zip
             ) else (
