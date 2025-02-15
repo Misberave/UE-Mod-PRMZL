@@ -18,11 +18,14 @@ setlocal EnableDelayedExpansion
 :: CONFIGURATION - Set your values here, all in ""
 :: ======================================
 
-:: Unreal Engine RunUAT.bat Path
-set ENGINE_PATH="C:\UEX.XX\Engine\Build\BatchFiles\RunUAT.bat"
+: Unreal Engine AutomationTool RunUAT.bat Path
+set RUNUAT_PATH="C:\UEX.XX\Engine\Build\BatchFiles\RunUAT.bat"
+
+: Unreal Engine cmd Path
+set ENGINE_PATH=C:\UE4.26_FF7R2\FF7RebirthEnginev2\Engine\Binaries\Win64\UE4Editor-Cmd.exe
 
 :: Unreal Project Path
-set PROJECT_PATH="C:\Users\User\Documents\Unreal Projects\Project\Example.uproject"
+set PROJECT_PATH="C:\FF7R2UProj-main\End.uproject"
 
 :: UE Package Directory
 set ARCHIVE_DIR="C:\UE_Package_Directory"
@@ -102,20 +105,23 @@ title UE Modding PRMZL
 echo Running UE BuildCookRun...
 
 if "%ENABLE_IOSTORE%" == "1" (
-    call %ENGINE_PATH% BuildCookRun ^
+    call %RUNUAT_PATH% BuildCookRun ^
+        -nocompileeditor -installed -nop4 ^
         -project="%PROJECT_PATH%" ^
-        -noP4 -platform=Win64 -clientconfig=Shipping -serverconfig=Shipping ^
-        -cook -build -stage -pak -compressed ^
-        -archive -archivedirectory="%ARCHIVE_DIR%" ^
-        -iostore ^
-        -verbose
+        -cook -stage -archive -archivedirectory="%ARCHIVE_DIR%" ^
+        -package -ue4exe="%ENGINE_PATH%" ^
+        -compressed -ddc=InstalledDerivedDataBackendGraph -iostore -pak ^
+        -prereqs -manifests -targetplatform=Win64 ^
+        -build -target=End -clientconfig=Shipping -utf8output
 ) else (
-    call %ENGINE_PATH% BuildCookRun ^
+    call %RUNUAT_PATH% BuildCookRun ^
+        -nocompileeditor -installed -nop4 ^
         -project="%PROJECT_PATH%" ^
-        -noP4 -platform=Win64 -clientconfig=Shipping -serverconfig=Shipping ^
-        -cook -build -stage -pak -compressed ^
-        -archive -archivedirectory="%ARCHIVE_DIR%" ^
-        -verbose
+        -cook -stage -archive -archivedirectory="%ARCHIVE_DIR%" ^
+        -package -ue4exe="%ENGINE_PATH%" ^
+        -compressed -ddc=InstalledDerivedDataBackendGraph -pak ^
+        -prereqs -manifests -targetplatform=Win64 ^
+        -build -target=End -clientconfig=Shipping -utf8output
 )
 
 if %errorlevel% neq 0 (
