@@ -1,6 +1,6 @@
 @echo off
 setlocal EnableDelayedExpansion
-
+:main
 ::Created and directed by Misberave, with help from AI
 
 ::██████╗░██████╗░███╗░░░███╗███████╗██╗░░░░░
@@ -318,6 +318,15 @@ echo " ░ ░  ░ ░ ░ ░ ▒     ░   ░ ░    ░
 echo "   ░        ░ ░           ░    ░  ░
 echo " ░                                 
 echo.
+echo.
 
 echo Have fun
+echo Press [P] to Restart or any other key to Exit.
+choice /C P /N /M "Press P to Restart, any other key to Exit: "
+
+if errorlevel 1 goto main
+
+echo Press any key to close.
+exit
+
 pause
