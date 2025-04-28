@@ -1,6 +1,6 @@
 @echo off
 setlocal EnableDelayedExpansion
-
+:main
 ::Created and directed by Misberave, with help from AI
 
 ::██████╗░██████╗░███╗░░░███╗███████╗██╗░░░░░
@@ -14,38 +14,36 @@ setlocal EnableDelayedExpansion
 ::Script to automate the Unreal Engine modding pipeline needed to test and share mods from packaging to testing with automatic readme creation, customize settings below.
 ::https://github.com/Misberave
 
-:: ======================================
-:: CONFIGURATION - Set your values here, all in ""
-:: ======================================
+: Unreal Engine AutomationTool RunUAT.bat Path
+set RUNUAT_PATH="Y:\UE_5.3\Engine\Build\BatchFiles\RunUAT.bat"
 
-:: Unreal Engine RunUAT.bat Path
-set ENGINE_PATH="C:\UEX.XX\Engine\Build\BatchFiles\RunUAT.bat"
+: Unreal Engine cmd Path
+set ENGINE_PATH=Y:\UE_5.3\Engine\Binaries\Win64\UnrealEditor-Cmd.exe
 
 :: Unreal Project Path
-set PROJECT_PATH="C:\Users\User\Documents\Unreal Projects\Project\Example.uproject"
+set PROJECT_PATH=C:\Users\User\Documents\Unreal Projects\MyProject\YourProject.uproject
 
 :: UE Package Directory
-set ARCHIVE_DIR="C:\UE_Package_Directory"
+set ARCHIVE_DIR="M:\Modding_Data\ES_Oblivion"
 
 ::IOSTORE
 set ENABLE_IOSTORE=1
 
 :: Game Destination Path (Optional for automatic game launch if enabled)
-set GAME_PATH="C:\Path\To\Game.exe"
+set GAME_PATH="C:\Users\User\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Steam\The Elder Scrolls IV Oblivion Remastered.url"
 
-:: Source and Destination paths (Source=Package Directory, Destination=Game ~mods or paks folder)
-set SOURCE_PATH="M:\UE_Package_Directory\WindowsNoEditor\...\Content\Paks"
-set DESTINATION_PATH="Y:\SteamLibrary\steamapps\common\...\...\Content\Paks\~mods"
+:: Source and Destination paths for moving files (Source=Package Directory, Destination=Game ~mods or paks folder)
+set SOURCE_PATH="M:\Modding_Data\ES_Oblivion\Windows\YourProject\Content\Paks"
+set DESTINATION_PATH="M:\SteamLibrary\steamapps\common\Oblivion Remastered\OblivionRemastered\Content\Paks"
 
 :: Mod Files (can have multiple at once with ChunkID:ModName format seperated with Space)
-set MOD_FILES=555:Modname1 556:Mod2Name 557:Mod3Name 558:Mod4Name
+set MOD_FILES=55:ModName1 56:Modname2 57:Modname3 
 
 :: Assign mod descriptions for the readme (Optional if readme is enabled)
 (
-    echo 555:Description of your mod
-    echo 556:Description of your mod
-    echo 557:Description of your mod 
-    echo 558:Description of your mod
+    echo 55: Put Description Here
+    echo 56: Description 2
+    echo 57: Description 3
 ) > mod_descriptions.txt
 
 ========================================
@@ -60,11 +58,11 @@ set ENABLE_GAME_LAUNCH=1
 set ENABLE_README=1
 
 :: Readme Configuration
-set "MOD_AUTHOR=Misberave"
+set "MOD_AUTHOR=YourName
 ::Date (Automatic)
 set "MOD_DATE=%DATE%"
 ::Link (Optional)
-set LINK=www.Example.com
+set LINK=Example.com
 
 :: README Mode (1 = Own README for each Mod, 2 = Summary README for multiple Mods)
 set README_MODE=1
@@ -102,20 +100,23 @@ title UE Modding PRMZL
 echo Running UE BuildCookRun...
 
 if "%ENABLE_IOSTORE%" == "1" (
-    call %ENGINE_PATH% BuildCookRun ^
+    call %RUNUAT_PATH% BuildCookRun ^
+        -nocompileeditor -installed -nop4 ^
         -project="%PROJECT_PATH%" ^
-        -noP4 -platform=Win64 -clientconfig=Shipping -serverconfig=Shipping ^
-        -cook -build -stage -pak -compressed ^
-        -archive -archivedirectory="%ARCHIVE_DIR%" ^
-        -iostore ^
-        -verbose
+        -cook -stage -archive -archivedirectory="%ARCHIVE_DIR%" ^
+        -package -ue4exe="%ENGINE_PATH%" ^
+        -compressed -ddc=InstalledDerivedDataBackendGraph -iostore -pak ^
+        -prereqs -manifests -targetplatform=Win64 ^
+        -build -target=End -clientconfig=Shipping -utf8output
 ) else (
-    call %ENGINE_PATH% BuildCookRun ^
+    call %RUNUAT_PATH% BuildCookRun ^
+        -nocompileeditor -installed -nop4 ^
         -project="%PROJECT_PATH%" ^
-        -noP4 -platform=Win64 -clientconfig=Shipping -serverconfig=Shipping ^
-        -cook -build -stage -pak -compressed ^
-        -archive -archivedirectory="%ARCHIVE_DIR%" ^
-        -verbose
+        -cook -stage -archive -archivedirectory="%ARCHIVE_DIR%" ^
+        -package -ue4exe="%ENGINE_PATH%" ^
+        -compressed -ddc=InstalledDerivedDataBackendGraph -pak ^
+        -prereqs -manifests -targetplatform=Win64 ^
+        -build -target=End -clientconfig=Shipping -utf8output
 )
 
 if %errorlevel% neq 0 (
@@ -139,14 +140,14 @@ for %%I in (%DESTINATION_PATH%) do set DESTINATION_PATH=%%~I
 echo Starting the renaming and moving process...
 
 if not exist "%SOURCE_PATH%" (
-    echo ERROR: Source folder does not exist! Path: "%SOURCE_PATH%" >nul 2>nul
+    echo ERROR: Source folder does not exist! Path: "%SOURCE_PATH%"
     pause
     exit /b
 )
 
 if not exist "%DESTINATION_PATH%" (
-    echo Destination folder does not exist. Creating folder... >nul 2>nul
-    mkdir "%DESTINATION_PATH%" >nul 2>nul
+    echo Destination folder does not exist. Creating folder...
+    mkdir "%DESTINATION_PATH%"
 )
 
 for %%S in (%MOD_FILES%) do (
@@ -159,11 +160,11 @@ for %%S in (%MOD_FILES%) do (
         echo Processing Mod File: !MOD_NAME!...
 
         for %%E in (.utoc .ucas .pak) do (
-            if exist "!SOURCE_PATH!\pakchunk!PAKCHUNK_ID!-WindowsNoEditor%%E" (
-                move "!SOURCE_PATH!\pakchunk!PAKCHUNK_ID!-WindowsNoEditor%%E" "!DESTINATION_PATH!\!MOD_NAME!%%E" >nul 2>nul
-                echo File moved: pakchunk!PAKCHUNK_ID!-WindowsNoEditor%%E
+            if exist "!SOURCE_PATH!\pakchunk!PAKCHUNK_ID!-Windows%%E" (
+                move "!SOURCE_PATH!\pakchunk!PAKCHUNK_ID!-Windows%%E" "!DESTINATION_PATH!\!MOD_NAME!%%E"
+                echo File moved: pakchunk!PAKCHUNK_ID!-Windows%%E
             ) else (
-                echo WARNING: File not found -> "!SOURCE_PATH!\pakchunk!PAKCHUNK_ID!-WindowsNoEditor%%E" >nul 2>nul
+                echo WARNING: File not found -> "!SOURCE_PATH!\pakchunk!PAKCHUNK_ID!-Windows%%E"
             )
         )
     )
@@ -296,7 +297,6 @@ if "%ENABLE_GAME_LAUNCH%" == "1" (
 )
 
 
-
 del mod_descriptions.txt
 
 @echo off
@@ -314,4 +314,15 @@ echo " ░
 echo.
 
 echo Have fun
+
+:: Nach Beendigung des Skripts
+echo.
+echo Press [P] to Restart or any other key to Exit.
+choice /C P /N /M "Press P to Restart, any other key to Exit: "
+
+if errorlevel 1 goto main
+
+echo Press any key to close.
+exit
+
 pause
