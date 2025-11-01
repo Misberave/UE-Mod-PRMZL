@@ -1,5 +1,7 @@
 # UE-Mod-PRMZL
 
+###ATTENTION: Looking for someone to turn this into a Powershell executable, please DM me if youre interested. I started a template already.###
+
 ██████╗░██████╗░███╗░░░███╗███████╗██╗░░░░░
 ██╔══██╗██╔══██╗████╗░████║╚════██║██║░░░░░
 ██████╔╝██████╔╝██╔████╔██║░░███╔═╝██║░░░░░
